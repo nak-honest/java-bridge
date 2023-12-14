@@ -18,22 +18,12 @@ public class GameController {
     }
 
     public void startGame() {
-        int retryCount = 1;
         BridgeGame bridgeGame = ExceptionRetryHandler.retryUntilValid(this::createBridgeGame);
         startRound(bridgeGame);
 
-        while (bridgeGame.getCurrentState() == GameState.LOSE) {
-            RetryOption retryOption = ExceptionRetryHandler.retryUntilValid(this::selectRetryOption);
-            if (retryOption == RetryOption.QUIT) {
-                break;
-            }
+        retryGame(bridgeGame);
 
-            retryCount++;
-            bridgeGame.retry();
-            startRound(bridgeGame);
-        }
-
-        outputView.printResult(bridgeGame.getResults(), bridgeGame.getCurrentState(), retryCount);
+        outputView.printResult(bridgeGame.getResults(), bridgeGame.getCurrentState(), bridgeGame.getRetryCount());
     }
 
     private BridgeGame createBridgeGame() {
@@ -51,6 +41,18 @@ public class GameController {
         String userSection = inputView.readMoving();
         RoundResult roundResult = bridgeGame.move(Section.of(userSection));
         outputView.printMap(roundResult.getResults());
+    }
+
+    private void retryGame(BridgeGame bridgeGame) {
+        while (bridgeGame.getCurrentState() == GameState.LOSE) {
+            RetryOption retryOption = ExceptionRetryHandler.retryUntilValid(this::selectRetryOption);
+            if (retryOption == RetryOption.QUIT) {
+                return;
+            }
+
+            bridgeGame.retry();
+            startRound(bridgeGame);
+        }
     }
 
     private RetryOption selectRetryOption() {

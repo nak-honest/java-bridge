@@ -12,9 +12,11 @@ import java.util.List;
 public class BridgeGame {
     private final Bridge bridge;
     private RoundResult roundResult = new RoundResult(Collections.emptyList());
+    private int retryCount;
 
     public BridgeGame(Bridge bridge) {
         this.bridge = bridge;
+        this.retryCount = 1;
     }
 
     /**
@@ -37,6 +39,7 @@ public class BridgeGame {
      */
     public void retry() {
         roundResult = new RoundResult(Collections.emptyList());
+        retryCount++;
     }
 
     public List<SectionResult> getResults() {
@@ -45,5 +48,9 @@ public class BridgeGame {
 
     public GameState getCurrentState() {
         return GameState.getState(roundResult, bridge.getSize());
+    }
+
+    public int getRetryCount() {
+        return retryCount;
     }
 }

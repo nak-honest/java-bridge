@@ -1,6 +1,7 @@
 package bridge.controller;
 
 import bridge.domain.*;
+import bridge.util.ExceptionRetryHandler;
 import bridge.view.InputView;
 import bridge.view.OutputView;
 
@@ -17,11 +18,11 @@ public class GameController {
 
     public void startGame() {
         int retryCount = 1;
-        BridgeGame bridgeGame = createBridgeGame();
+        BridgeGame bridgeGame = ExceptionRetryHandler.retryUntilValid(this::createBridgeGame);
         startRound(bridgeGame);
 
         while (bridgeGame.getCurrentState() == GameState.LOSE) {
-            RetryOption retryOption = RetryOption.of(inputView.readGameCommand());
+            RetryOption retryOption = ExceptionRetryHandler.retryUntilValid(this::selectRetryOption);
             if (retryOption == RetryOption.QUIT) {
                 break;
             }
@@ -41,7 +42,7 @@ public class GameController {
 
     private void startRound(BridgeGame bridgeGame) {
         do {
-            processRound(bridgeGame);
+            ExceptionRetryHandler.retryUntilValid(this::processRound, bridgeGame);
         } while (bridgeGame.getCurrentState() == GameState.CONTINUE);
     }
 
@@ -49,5 +50,10 @@ public class GameController {
         String userSection = inputView.readMoving();
         RoundResult roundResult = bridgeGame.move(Section.of(userSection));
         outputView.printMap(roundResult.getResults());
+    }
+
+    private RetryOption selectRetryOption() {
+        String retryOption = inputView.readGameCommand();
+        return RetryOption.of(retryOption);
     }
 }

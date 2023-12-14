@@ -29,8 +29,12 @@ public final class Bridge {
                 .collect(Collectors.toList()));
     }
 
-    public Section getSection(int index) {
-        return sections.get(index);
+    public Section getNextSection(RoundResult roundResult) {
+        return sections.get(roundResult.getSize());
+    }
+
+    public int getSize() {
+        return sections.size();
     }
 
     public List<Section> getCollection() {

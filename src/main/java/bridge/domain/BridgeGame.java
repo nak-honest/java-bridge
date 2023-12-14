@@ -18,11 +18,12 @@ public class BridgeGame {
      * <p>
      * 이동을 위해 필요한 메서드의 반환 타입(return type), 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
      */
-    public void move(Section userSection) {
-        Section bridgeSection = bridge.getSection(roundResult.getSize());
-        SectionResult result = SectionResult.getResult(bridgeSection, userSection);
+    public RoundResult move(Section userSection) {
+        Section bridgeSection = bridge.getNextSection(roundResult);
+        SectionResult sectionResult = SectionResult.getResult(bridgeSection, userSection);
 
-        roundResult = roundResult.updateResult(result);
+        roundResult = roundResult.updateResult(sectionResult);
+        return roundResult;
     }
 
     /**
@@ -31,5 +32,9 @@ public class BridgeGame {
      * 재시작을 위해 필요한 메서드의 반환 타입(return type), 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
      */
     public void retry() {
+    }
+
+    public GameState getCurrentState() {
+        return GameState.getState(roundResult, bridge.getSize());
     }
 }

@@ -21,4 +21,17 @@ public final class RoundResult {
     public int getSize() {
         return results.size();
     }
+
+    public boolean isLastSuccess() {
+        SectionResult lastResult = results.get(results.size() - 1);
+        return lastResult.isSuccess();
+    }
+
+    public boolean isSameSize(int bridgeSize) {
+        return results.size() == bridgeSize;
+    }
+
+    public List<SectionResult> getResults() {
+        return Collections.unmodifiableList(results);
+    }
 }

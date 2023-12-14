@@ -1,13 +1,13 @@
 package bridge.domain;
 
 import bridge.BridgeRandomNumberGenerator;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 public class BridgeMakerTest {
     @ParameterizedTest
@@ -31,5 +31,17 @@ public class BridgeMakerTest {
         // when & then
         assertThatCode(() -> bridgeMaker.makeBridge(size))
                 .doesNotThrowAnyException();
+    }
+
+    @Test
+    void 주어진_생성기에_따라_다리를_생성할_수_있다() {
+        // given
+        BridgeMaker bridgeMaker = new BridgeMaker(() -> 1);
+
+        // when
+        List<String> bridge = bridgeMaker.makeBridge(3);
+
+        // then
+        assertThat(bridge).containsExactly("U", "U", "U");
     }
 }

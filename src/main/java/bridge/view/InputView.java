@@ -1,15 +1,32 @@
 package bridge.view;
 
+import java.util.function.Supplier;
+
 /**
  * 사용자로부터 입력을 받는 역할을 한다.
  */
 public class InputView {
+    private final Supplier<String> reader;
+    private final Writer writer;
+
+    public InputView(Supplier<String> reader, Writer writer) {
+        this.reader = reader;
+        this.writer = writer;
+    }
 
     /**
      * 다리의 길이를 입력받는다.
      */
     public int readBridgeSize() {
-        return 0;
+        String input = reader.get();
+        try {
+            int size = Integer.parseInt(input);
+            writer.writeLine("");
+
+            return size;
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("[ERROR] 다리 길이는 숫자여야 합니다.");
+        }
     }
 
     /**

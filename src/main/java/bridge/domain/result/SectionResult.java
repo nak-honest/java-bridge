@@ -1,4 +1,6 @@
-package bridge.domain;
+package bridge.domain.result;
+
+import bridge.domain.Section;
 
 import java.util.Set;
 

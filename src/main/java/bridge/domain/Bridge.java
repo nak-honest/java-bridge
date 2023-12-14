@@ -1,5 +1,7 @@
 package bridge.domain;
 
+import bridge.domain.result.RoundResult;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

@@ -2,8 +2,8 @@ package bridge.view;
 
 import bridge.domain.GameState;
 import bridge.domain.Section;
-import bridge.domain.SectionResult;
-import bridge.domain.SelectResult;
+import bridge.domain.result.SectionResult;
+import bridge.domain.result.SelectResult;
 
 import java.util.EnumMap;
 import java.util.List;

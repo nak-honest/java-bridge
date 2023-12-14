@@ -1,5 +1,8 @@
 package bridge.domain;
 
+import bridge.domain.result.RoundResult;
+import bridge.domain.result.SectionResult;
+
 import java.util.Collections;
 import java.util.List;
 

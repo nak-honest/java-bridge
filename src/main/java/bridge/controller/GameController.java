@@ -17,14 +17,28 @@ public class GameController {
 
     public void startGame() {
         BridgeGame bridgeGame = createBridgeGame();
-        do {
-            processRound(bridgeGame);
-        } while (bridgeGame.getCurrentState() == GameState.CONTINUE);
+        startRound(bridgeGame);
+
+        while (bridgeGame.getCurrentState() == GameState.LOSE) {
+            RetryOption retryOption = RetryOption.of(inputView.readGameCommand());
+            if (retryOption == RetryOption.QUIT) {
+                break;
+            }
+
+            bridgeGame.retry();
+            startRound(bridgeGame);
+        }
     }
 
     private BridgeGame createBridgeGame() {
         int bridgeSize = inputView.readBridgeSize();
         return new BridgeGame(Bridge.of(bridgeMaker, bridgeSize));
+    }
+
+    private void startRound(BridgeGame bridgeGame) {
+        do {
+            processRound(bridgeGame);
+        } while (bridgeGame.getCurrentState() == GameState.CONTINUE);
     }
 
     private void processRound(BridgeGame bridgeGame) {

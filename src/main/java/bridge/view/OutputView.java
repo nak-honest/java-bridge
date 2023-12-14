@@ -45,7 +45,7 @@ public class OutputView {
     private void printSection(List<SectionResult> results, Section printSection) {
         StringJoiner stringJoiner = new StringJoiner(" | ", "[ ", " ]");
         for (SectionResult sectionResult : results) {
-            SelectResult selectResult = sectionResult.getSelectResult(printSection);
+            SelectResult selectResult = SelectResult.getResult(sectionResult, printSection);
 
             stringJoiner.add(SELECT_RESULT_STRING.get(selectResult));
         }

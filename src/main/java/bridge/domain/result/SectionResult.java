@@ -32,19 +32,7 @@ public class SectionResult {
         return isSuccess;
     }
 
-    public SelectResult getSelectResult(Section section) {
-        if (section.equals(userSection)) {
-            return getSelectResultWhenSelected();
-        }
-
-        return SelectResult.NOT_SELECTED;
-    }
-
-    private SelectResult getSelectResultWhenSelected() {
-        if (isSuccess) {
-            return SelectResult.SUCCESS;
-        }
-
-        return SelectResult.FAIL;
+    public boolean isSameSection(Section section) {
+        return userSection.equals(section);
     }
 }

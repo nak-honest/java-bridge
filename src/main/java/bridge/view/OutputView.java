@@ -3,7 +3,7 @@ package bridge.view;
 import bridge.domain.GameState;
 import bridge.domain.Section;
 import bridge.domain.result.SectionResult;
-import bridge.domain.result.SelectResult;
+import bridge.domain.result.SelectedSectionResult;
 
 import java.util.EnumMap;
 import java.util.List;
@@ -13,13 +13,13 @@ import java.util.StringJoiner;
  * 사용자에게 게임 진행 상황과 결과를 출력하는 역할을 한다.
  */
 public class OutputView {
-    private static final EnumMap<SelectResult, String> SELECT_RESULT_STRING = new EnumMap<>(SelectResult.class);
+    private static final EnumMap<SelectedSectionResult, String> SELECT_RESULT_STRING = new EnumMap<>(SelectedSectionResult.class);
     private static final EnumMap<GameState, String> GAME_RESULT_STRING = new EnumMap<>(GameState.class);
 
     static {
-        SELECT_RESULT_STRING.put(SelectResult.SUCCESS, "O");
-        SELECT_RESULT_STRING.put(SelectResult.FAIL, "X");
-        SELECT_RESULT_STRING.put(SelectResult.NOT_SELECTED, " ");
+        SELECT_RESULT_STRING.put(SelectedSectionResult.SUCCESS, "O");
+        SELECT_RESULT_STRING.put(SelectedSectionResult.FAIL, "X");
+        SELECT_RESULT_STRING.put(SelectedSectionResult.NOT_SELECTED, " ");
 
         GAME_RESULT_STRING.put(GameState.WIN, "성공");
         GAME_RESULT_STRING.put(GameState.LOSE, "실패");
@@ -45,9 +45,9 @@ public class OutputView {
     private void printSection(List<SectionResult> results, Section printSection) {
         StringJoiner stringJoiner = new StringJoiner(" | ", "[ ", " ]");
         for (SectionResult sectionResult : results) {
-            SelectResult selectResult = SelectResult.getResult(sectionResult, printSection);
+            SelectedSectionResult selectedSectionResult = SelectedSectionResult.getResult(sectionResult, printSection);
 
-            stringJoiner.add(SELECT_RESULT_STRING.get(selectResult));
+            stringJoiner.add(SELECT_RESULT_STRING.get(selectedSectionResult));
         }
 
         writer.writeLine(stringJoiner.toString());

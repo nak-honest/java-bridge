@@ -16,6 +16,7 @@ public class GameController {
     }
 
     public void startGame() {
+        int retryCount = 1;
         BridgeGame bridgeGame = createBridgeGame();
         startRound(bridgeGame);
 
@@ -25,6 +26,7 @@ public class GameController {
                 break;
             }
 
+            retryCount++;
             bridgeGame.retry();
             startRound(bridgeGame);
         }

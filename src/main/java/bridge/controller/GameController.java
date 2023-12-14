@@ -31,7 +31,7 @@ public class GameController {
             startRound(bridgeGame);
         }
 
-        outputView.printResult(bridgeGame.getResults(), bridgeGame.getCurrentState());
+        outputView.printResult(bridgeGame.getResults(), bridgeGame.getCurrentState(), retryCount);
     }
 
     private BridgeGame createBridgeGame() {

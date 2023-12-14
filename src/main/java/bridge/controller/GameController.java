@@ -28,6 +28,8 @@ public class GameController {
             bridgeGame.retry();
             startRound(bridgeGame);
         }
+
+        outputView.printResult(bridgeGame.getResults(), bridgeGame.getCurrentState());
     }
 
     private BridgeGame createBridgeGame() {

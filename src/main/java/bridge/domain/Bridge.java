@@ -29,6 +29,10 @@ public final class Bridge {
                 .collect(Collectors.toList()));
     }
 
+    public Section getSection(int index) {
+        return sections.get(index);
+    }
+
     public List<Section> getCollection() {
         return Collections.unmodifiableList(sections);
     }

@@ -2,7 +2,6 @@ package bridge.domain;
 
 import bridge.BridgeNumberGenerator;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -28,9 +27,17 @@ public class BridgeMaker {
      * @return 입력받은 길이에 해당하는 다리 모양. 위 칸이면 "U", 아래 칸이면 "D"로 표현해야 한다.
      */
     public List<String> makeBridge(int size) {
+        validateSize(size);
+
         return Stream.generate(bridgeNumberGenerator::generate)
                 .limit(size)
                 .map(SECTION::get)
                 .collect(Collectors.toList());
+    }
+
+    private void validateSize(int size) {
+        if (size < 0) {
+            throw new IllegalArgumentException("[ERROR] 다리 길이는 음수가 될 수 없습니다.");
+        }
     }
 }
